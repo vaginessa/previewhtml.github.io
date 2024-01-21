@@ -1,5 +1,17 @@
-GitHub & BitBucket HTML Preview
--------------------------------
+<!--
+SPDX-FileCopyrightText: 2012 - 2021 Jerzy Głowacki <jerzyglowacki@gmail.com>
+
+SPDX-License-Identifier: Apache-2.0
+-->
+
+# GitHub & BitBucket HTML Preview
+
+[![License: Apache-2.0](
+    https://img.shields.io/badge/License-Apache--2.0-blue.svg)](
+    LICENSE.txt)
+[![REUSE status](
+    https://api.reuse.software/badge/github.com/osegermany/git-forge-html-preview)](
+    https://api.reuse.software/info/github.com/osegermany/git-forge-html-preview)
 
 Many GitHub repositories don't use GitHub Pages to host their HTML files. **GitHub & BitBucket HTML Preview** allows you to render those files without cloning or downloading whole repositories. It is a client-side solution using a CORS proxy to fetch assets.
 
@@ -15,7 +27,3 @@ In order to use it, just prepend this fragment to the URL of any HTML file: **[h
 What it does is: load HTML using CORS proxy, then process all links, frames, scripts and styles, and load each of them using CORS proxy, so they can be evaluated by the browser.
 
 **GitHub & BitBucket HTML Preview** was tested under the latest Google Chrome and Mozilla Firefox.
-
-## License
-
-&copy; 2019 Jerzy Głowacki under Apache License 2.0.

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2012 - 2021 Jerzy Głowacki <jerzyglowacki@gmail.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 (function () {
 	
 	var previewForm = document.getElementById('previewform');
