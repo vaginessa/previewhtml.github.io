@@ -8,6 +8,15 @@
 
 	var url = location.search.substring(1).replace(/\/\/github\.com/, '//raw.githubusercontent.com').replace(/\/blob\//, '/').replace(/\/raw\//, '/'); //Get URL of the raw file
 
+	var rewrite = function (url) {
+		if (location.port.length) {
+			port_part = ':' + location.port
+		} else {
+			port_part = ''
+		}
+		return location.protocol + '//' + location.hostname + port_part + location.pathname + '?' + url
+	}
+
 	var replaceAssets = function () {
 		var frame, a, link, links = [], script, scripts = [], i, href, src;
 		//Framesets
@@ -18,7 +27,7 @@
 		for (i = 0; i < frame.length; ++i) {
 			src = frame[i].src; //Get absolute URL
 			if (src.indexOf('//raw.githubusercontent.com') > 0 || src.indexOf('//bitbucket.org') > 0) { //Check if it's from raw.github.com or bitbucket.org
-				frame[i].src = '//' + location.hostname + location.pathname + '?' + src; //Then rewrite URL so it can be loaded using CORS proxy
+				frame[i].src = rewrite(src); //Then rewrite URL so it can be loaded using CORS proxy
 			}
 		}
 		//Links
@@ -27,10 +36,10 @@
 			href = a[i].href; //Get absolute URL
 			if (href.indexOf('#') > 0) { //Check if it's an anchor
 				if ((a[i].protocol + '//' + a[i].hostname + a[i].pathname) == url) { //Rewrite links to this document only
-					a[i].href = '//' + location.hostname + location.pathname + location.search + '#' + a[i].hash.substring(1); //Then rewrite URL with support for empty anchor
+					a[i].href = location.protocol + '//' + location.hostname + ':' + location.port + location.pathname + location.search + '#' + a[i].hash.substring(1); //Then rewrite URL with support for empty anchor
 				} // Do not modify external URLs with fragment
 			} else if ((href.indexOf('//raw.githubusercontent.com') > 0 || href.indexOf('//bitbucket.org') > 0) && (href.indexOf('.html') > 0 || href.indexOf('.htm') > 0)) { //Check if it's from raw.github.com or bitbucket.org and to HTML files
-				a[i].href = '//' + location.hostname + location.pathname + '?' + href; //Then rewrite URL so it can be loaded using CORS proxy
+				a[i].href = rewrite(href); //Then rewrite URL so it can be loaded using CORS proxy
 			}
 		}
 		//Stylesheets
