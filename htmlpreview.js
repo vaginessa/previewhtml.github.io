@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 (function () {
-	
+
 	var previewForm = document.getElementById('previewform');
 
 	var url = location.search.substring(1).replace(/\/\/github\.com/, '//raw.githubusercontent.com').replace(/\/blob\//, '/').replace(/\/raw\//, '/'); //Get URL of the raw file
@@ -109,7 +109,7 @@
 			document.body.appendChild(script);
 		}
 	};
-	
+
 	var fetchProxy = function (url, options, i) {
 		var proxy = [
 			'', // try without proxy first
