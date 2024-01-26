@@ -197,7 +197,7 @@
 
 	if (rawFileUrl && rawFileUrl.indexOf(location.hostname) < 0) {
 		fetchProxy(rawFileUrl, null, 0).then(loadHTML).catch(function (error) {
-			console.error(error);
+			// console.error(error);
 			previewForm.style.display = 'block';
 			previewForm.innerText = error;
 		});
