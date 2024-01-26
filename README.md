@@ -18,8 +18,8 @@ Allows to render HTML files on git forges (like GitHub) in your browser,
 without cloning or downloading.
 
 **NOTE**
-Freely hosted [CORS (Cross-origin resource sharing) proxy][CORS] proxies -
-like the ones used by this script,
+Freely hosted [CORS][CORS] (Cross-origin resource sharing) proxies -
+like the ones used by this script -
 are a potential security risc!
 
 Currently supported git forges:
