@@ -37,6 +37,20 @@
 	}
 
 	/**
+	 * Returns the base URL of our service,
+	 * to which the git hosted file URL can be appended.
+	 */
+	const getServiceBase = function () {
+		if (window.location) {
+			const loc = window.location;
+			const serviceBase = loc.origin + loc.pathname;
+			return serviceBase;
+		}
+		// Fallback value
+		return 'https://git-forge-html-preview.github.io/git-forge-html-preview/?';
+	}
+
+	/**
 	 * Rewrite URL so it can be loaded using CORS proxy.
 	 * @param {string} url - Any URL
 	 */
@@ -63,6 +77,9 @@
 			obj[prop] = rewrite(url);
 		}
 	}
+
+	const serviceBase = getServiceBase();
+	document.getElementById("service_base").innerHTML = serviceBase + '?';
 
 	const previewForm = document.getElementById('previewform');
 
