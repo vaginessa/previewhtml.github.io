@@ -60,7 +60,8 @@
 			if (href.indexOf('#') > 0) {
 				// Rewrite links to this document only
 				if ((a[i].protocol + '//' + a[i].hostname + a[i].pathname) == url) {
-					a[i].href = location.protocol + '//' + location.hostname + ':' + location.port + location.pathname + location.search + '#' + a[i].hash.substring(1); //Then rewrite URL with support for empty anchor
+					// Then rewrite URL with support for empty anchor
+					a[i].href = location.protocol + '//' + location.hostname + ':' + location.port + location.pathname + location.search + '#' + a[i].hash.substring(1);
 				}
 				// Do not modify external URLs with fragment
 			}
