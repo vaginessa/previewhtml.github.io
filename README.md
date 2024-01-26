@@ -11,8 +11,8 @@ SPDX-License-Identifier: Apache-2.0
     https://img.shields.io/badge/License-Apache--2.0-blue.svg)](
     LICENSE.txt)
 [![REUSE status](
-    https://api.reuse.software/badge/github.com/osegermany/git-forge-html-preview)](
-    https://api.reuse.software/info/github.com/osegermany/git-forge-html-preview)
+    https://api.reuse.software/badge/github.com/git-forge-html-preview/git-forge-html-preview)](
+    https://api.reuse.software/info/github.com/git-forge-html-preview/git-forge-html-preview)
 
 Allows to render HTML files on git forges (like GitHub) in your browser,
 without cloning or downloading.
