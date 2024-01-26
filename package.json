@@ -1,0 +1,26 @@
+{
+  "name": "git-forge-html-preview",
+  "version": "0.1.0",
+  "description": "A hosted instance of this tool allows to render HTML files which are hosted on git forges (like GitHub) in browsers, versus just showing them as plain-text.",
+  "main": "htmlpreview.js",
+  "scripts": {
+    "build": "run/build",
+    "lint": "eslint *.js",
+    "serve": "run/serve"
+  },
+  "devDependencies": {
+    "@minify-html/node": "^0.15.0",
+    "eslint": "^5.16.0",
+    "uglify-js": "^3.17.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/osegermany/git-forge-html-preview.git"
+  },
+  "keywords": [
+    "scm",
+    "git-forge",
+    "render",
+    "tool"
+  ]
+}
