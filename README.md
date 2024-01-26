@@ -1,10 +1,11 @@
 <!--
 SPDX-FileCopyrightText: 2012 - 2021 Jerzy Głowacki <jerzyglowacki@gmail.com>
+SPDX-FileCopyrightText: 2024 Robin Vobruba <hoijui.quaero@gmail.com>
 
 SPDX-License-Identifier: Apache-2.0
 -->
 
-# GitHub & BitBucket HTML Preview
+# Git-Forge HTML Preview
 
 [![License: Apache-2.0](
     https://img.shields.io/badge/License-Apache--2.0-blue.svg)](
@@ -13,17 +14,30 @@ SPDX-License-Identifier: Apache-2.0
     https://api.reuse.software/badge/github.com/osegermany/git-forge-html-preview)](
     https://api.reuse.software/info/github.com/osegermany/git-forge-html-preview)
 
-Many GitHub repositories don't use GitHub Pages to host their HTML files.
-**GitHub & BitBucket HTML Preview** allows you to render those files
-without cloning or downloading whole repositories.
-It is a client-side solution using a CORS proxy to fetch assets.
+Allows to render HTML files on git forges (like GitHub) in your browser,
+without cloning or downloading.
+
+**NOTE**
+Freely hosted [CORS (Cross-origin resource sharing) proxy][CORS] proxies -
+like the ones used by this script,
+are a potential security risc!
+
+Currently supported git forges:
+
+- [x] GitHub
+- [x] BitBucket
+- [ ] GitLab
+- [ ] ForgeJo (CodeBerg)
+- [ ] SourceHut
+- [ ] Gitea
+
+## How it works
 
 If you try to open raw version of any HTML, CSS or JS file
 in a web browser directly from GitHub,
-all you will see is a source code.
+all you will see is its source code.
 GitHub forces them to use the "text/plain" content-type,
-so they cannot be interpreted.
-This script overrides it by using a CORS proxy.
+so they cannot be interpreted in their native form by the browser.
 
 ## Usage
 
@@ -37,10 +51,12 @@ e.g.:
 
 What it does:
 
-1. Load HTML using CORS proxy
+1. Load HTML using [CORS] proxy
 2. Process all links, frames, scripts and styles, and
-3. Load each of them using CORS proxy,
+3. Load each of them using [CORS] proxy,
     so they can be evaluated by the browser.
 
-**GitHub & BitBucket HTML Preview** was tested
-under the latest Google Chrome and Mozilla Firefox (in 2012).
+**Git-Forge HTML Preview** was tested
+under the latest Google Chrome and Mozilla Firefox (**in _2012_**).
+
+[CORS]: https://httptoolkit.com/blog/cors-proxies/
