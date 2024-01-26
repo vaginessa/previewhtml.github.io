@@ -35,7 +35,12 @@ e.g.:
 - <https://htmlpreview.github.io/?https://github.com/twbs/bootstrap/gh-pages/2.3.2/index.html>
 - <https://htmlpreview.github.io/?https://github.com/documentcloud/backbone/blob/master/examples/todos/index.html>
 
-What it does is: load HTML using CORS proxy, then process all links, frames, scripts and styles, and load each of them using CORS proxy, so they can be evaluated by the browser.
+What it does:
+
+1. Load HTML using CORS proxy
+2. Process all links, frames, scripts and styles, and
+3. Load each of them using CORS proxy,
+    so they can be evaluated by the browser.
 
 **GitHub & BitBucket HTML Preview** was tested
 under the latest Google Chrome and Mozilla Firefox (in 2012).
