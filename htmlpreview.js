@@ -20,6 +20,10 @@
 	var previewForm = document.getElementById('previewform');
 
 
+	/**
+	 * Rewrite URL so it can be loaded using CORS proxy.
+	 * @param {string} url - Any URL
+	 */
 	var rewrite = function (url) {
 		let port_part;
 		if (location.port.length) {
