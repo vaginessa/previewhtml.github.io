@@ -4,12 +4,21 @@
 
 (function () {
 
+	/**
+	 * If the first parameter is a URL to a file on a known git forge,
+	 * returns the URL to the raw version of this file
+	 * (vs the HTML/Web view of it).
+	 *
+	 * NOTE: This function 1 of 2 that is git-forge specific.
+	 */
+	var getRawFileUrl = function () {
+		return location.search.substring(1)
+			.replace(/\/\/github\.com/, '//raw.githubusercontent.com')
+			.replace(/\/blob\//, '/').replace(/\/raw\//, '/');
+	}
+
 	var previewForm = document.getElementById('previewform');
 
-	// Get URL of the raw file
-	var url = location.search.substring(1)
-		.replace(/\/\/github\.com/, '//raw.githubusercontent.com')
-		.replace(/\/blob\//, '/').replace(/\/raw\//, '/');
 
 	var rewrite = function (url) {
 		let port_part;
@@ -20,6 +29,9 @@
 		}
 		return location.protocol + '//' + location.hostname + port_part + location.pathname + '?' + url
 	}
+
+	// Get URL of the raw file
+	var rawFileUrl = getRawFileUrl();
 
 	var replaceAssets = function () {
 		var frame, a, link, links = [], script, scripts = [], i, href, src;
@@ -59,7 +71,7 @@
 			// Check if it's an anchor
 			if (href.indexOf('#') > 0) {
 				// Rewrite links to this document only
-				if ((a[i].protocol + '//' + a[i].hostname + a[i].pathname) == url) {
+				if ((a[i].protocol + '//' + a[i].hostname + a[i].pathname) == rawFileUrl) {
 					// Then rewrite URL with support for empty anchor
 					a[i].href = location.protocol + '//' + location.hostname + ':' + location.port + location.pathname + location.search + '#' + a[i].hash.substring(1);
 				}
@@ -121,7 +133,7 @@
 			// and replace <script type="text/javascript">
 			// with <script type="text/htmlpreview">
 			data = data
-				.replace(/<head([^>]*)>/i, '<head$1><base href="' + url + '">')
+				.replace(/<head([^>]*)>/i, '<head$1><base href="' + rawFileUrl + '">')
 				.replace(/<script(\s*src=["'][^"']*["'])?(\s*type=["'](text|application)\/javascript["'])?/gi, '<script type="text/htmlpreview"$1');
 			// Delay updating document to have it cleared before
 			setTimeout(function () {
@@ -167,8 +179,8 @@
 		})
 	};
 
-	if (url && url.indexOf(location.hostname) < 0) {
-		fetchProxy(url, null, 0).then(loadHTML).catch(function (error) {
+	if (rawFileUrl && rawFileUrl.indexOf(location.hostname) < 0) {
+		fetchProxy(rawFileUrl, null, 0).then(loadHTML).catch(function (error) {
 			console.error(error);
 			previewForm.style.display = 'block';
 			previewForm.innerText = error;
