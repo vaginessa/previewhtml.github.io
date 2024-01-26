@@ -17,7 +17,24 @@
 			.replace(/\/blob\//, '/').replace(/\/raw\//, '/');
 	}
 
+	/**
+	 * Returns whether the given URL points to a file on a known git forge.
+	 * @param {string} url - Any URL
+	 *
+	 * NOTE: This is function 2 of 2 that is git-forge specific.
+	 */
+	var isGitForgeFileUrl = function (url) {
+		return (url.indexOf('//raw.githubusercontent.com') > 0 || url.indexOf('//bitbucket.org') > 0);
+	}
 
+	/**
+	 * Returns whether the given URL points to an HTML file,
+	 * considering only the file extension.
+	 * @param {string} url - Any URL
+	 */
+	var isHtmlUrl = function (url) {
+		return (url.indexOf('.html') > 0 || url.indexOf('.htm') > 0);
+	}
 
 	/**
 	 * Rewrite URL so it can be loaded using CORS proxy.
@@ -31,6 +48,20 @@
 			port_part = '';
 		}
 		return location.protocol + '//' + location.hostname + port_part + location.pathname + '?' + url;
+	}
+
+	/**
+	 * Rewrite URL so it can be loaded using CORS proxy,
+	 * if it points to a file on a known git forge.
+	 * @param {object} obj - An object containing a property that is a URL
+	 * @param {string} prop - The name of the URL property
+	 */
+	var rewriteCond = function (obj, prop) {
+		// Get absolute URL
+		const url = obj[prop]
+		if (isGitForgeFileUrl(url)) {
+			obj[prop] = rewrite(url);
+		}
 	}
 
 	var previewForm = document.getElementById('previewform');
@@ -49,24 +80,12 @@
 		// Frames
 		frame = document.querySelectorAll('iframe[src],frame[src]');
 		for (i = 0; i < frame.length; ++i) {
-			// Get absolute URL
-			src = frame[i].src;
-			// Check if it's from raw.github.com or bitbucket.org
-			if (src.indexOf('//raw.githubusercontent.com') > 0 || src.indexOf('//bitbucket.org') > 0) {
-				// Then rewrite URL so it can be loaded using CORS proxy
-				frame[i].src = rewrite(src);
-			}
+			rewriteCond(frame[i], "src");
 		}
 		// Objects
 		const object = document.querySelectorAll('object[data]');
 		for (i = 0; i < object.length; ++i) {
-			// Get absolute URL
-			src = object[i].data;
-			// Check if it's from raw.github.com or bitbucket.org
-			if (src.indexOf('//raw.githubusercontent.com') > 0 || src.indexOf('//bitbucket.org') > 0) {
-				// Then rewrite URL so it can be loaded using CORS proxy
-				object[i].data = rewrite(src);
-			}
+			rewriteCond(object[i], "data");
 		}
 		// Links
 		a = document.querySelectorAll('a[href]');
@@ -81,13 +100,7 @@
 					a[i].href = location.protocol + '//' + location.hostname + ':' + location.port + location.pathname + location.search + '#' + a[i].hash.substring(1);
 				}
 				// Do not modify external URLs with fragment
-			}
-			// Check if it's from raw.github.com or bitbucket.org and to HTML files
-			else if (
-				(href.indexOf('//raw.githubusercontent.com') > 0
-					|| href.indexOf('//bitbucket.org') > 0)
-				&& (href.indexOf('.html') > 0 || href.indexOf('.htm') > 0))
-			{
+			} else if (isGitForgeFileUrl(href) && isHtmlUrl(href)) {
 				// Then rewrite URL so it can be loaded using CORS proxy
 				a[i].href = rewrite(href);
 			}
@@ -97,8 +110,7 @@
 		for (i = 0; i < link.length; ++i) {
 			// Get absolute URL
 			href = link[i].href;
-			// Check if it's from raw.github.com or bitbucket.org
-			if (href.indexOf('//raw.githubusercontent.com') > 0 || href.indexOf('//bitbucket.org') > 0) {
+			if (isGitForgeFileUrl(href)) {
 				// Then add it to links queue and fetch using CORS proxy
 				links.push(fetchProxy(href, null, 0));
 			}
@@ -113,8 +125,7 @@
 		for (i = 0; i < script.length; ++i) {
 			// Get absolute URL
 			src = script[i].src;
-			// Check if it's from raw.github.com or bitbucket.org
-			if (src.indexOf('//raw.githubusercontent.com') > 0 || src.indexOf('//bitbucket.org') > 0) {
+			if (isGitForgeFileUrl(src)) {
 				// Then add it to scripts queue and fetch using CORS proxy
 				scripts.push(fetchProxy(src, null, 0));
 			} else {
