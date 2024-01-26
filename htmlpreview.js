@@ -17,7 +17,6 @@
 			.replace(/\/blob\//, '/').replace(/\/raw\//, '/');
 	}
 
-	var previewForm = document.getElementById('previewform');
 
 
 	/**
@@ -33,6 +32,8 @@
 		}
 		return location.protocol + '//' + location.hostname + port_part + location.pathname + '?' + url
 	}
+
+	var previewForm = document.getElementById('previewform');
 
 	// Get URL of the raw file
 	var rawFileUrl = getRawFileUrl();
