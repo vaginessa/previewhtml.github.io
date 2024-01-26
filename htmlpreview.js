@@ -12,6 +12,7 @@
 		.replace(/\/blob\//, '/').replace(/\/raw\//, '/');
 
 	var rewrite = function (url) {
+		let port_part;
 		if (location.port.length) {
 			port_part = ':' + location.port
 		} else {
@@ -40,7 +41,7 @@
 			}
 		}
 		// Objects
-		object = document.querySelectorAll('object[data]');
+		const object = document.querySelectorAll('object[data]');
 		for (i = 0; i < object.length; ++i) {
 			// Get absolute URL
 			src = object[i].data;
@@ -92,7 +93,7 @@
 		// Scripts
 		script = document.querySelectorAll('script[type="text/htmlpreview"]');
 		for (i = 0; i < script.length; ++i) {
-			 // Get absolute URL
+			// Get absolute URL
 			src = script[i].src;
 			// Check if it's from raw.github.com or bitbucket.org
 			if (src.indexOf('//raw.githubusercontent.com') > 0 || src.indexOf('//bitbucket.org') > 0) {
