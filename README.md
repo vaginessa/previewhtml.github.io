@@ -31,6 +31,8 @@ Currently supported git forges:
 - [ ] SourceHut
 - [ ] Gitea
 
+We have a collection of the [file URLs](forges.md) for the above.
+
 ## How it works
 
 If you try to open raw version of any HTML, CSS or JS file
