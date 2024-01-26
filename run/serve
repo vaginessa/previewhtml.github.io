@@ -1,0 +1,41 @@
+#!/usr/bin/env sh
+# SPDX-FileCopyrightText: 2024 Robin Vobruba <hoijui.quaero@gmail.com>
+# SPDX-License-Identifier: Unlicense
+
+set -eu
+
+script_path="$(readlink -f "$0")"
+script_dir="$(dirname "$script_path")"
+script_name="$(basename "$script_path")"
+
+serve_port="8083"
+# serve_dir="$script_dir/../public/"
+serve_dir="$script_dir/../"
+
+print_help() {
+
+	echo "$script_name - Runs a simple HTTP server,"
+	echo "serving '$serve_dir' on <http://localhost:8083>."
+}
+
+# read command-line args
+i=1
+while [ "$i" -lt "$#" ]
+do
+	arg="$(eval "echo \$$i")"
+
+	case "$arg" in
+		-h|--help)
+			shift "$i"
+			print_help
+			exit 0
+			;;
+		*) # non-/unknown option
+			i=$((i + 1))
+			;;
+	esac
+done
+
+echo "Serving '$serve_dir' on <http://localhost:$serve_port>."
+echo "Stop serving with [Ctrl+C]."
+busybox httpd -f -h "$serve_dir" -v -p "$serve_port"
