@@ -11,7 +11,7 @@
 	 *
 	 * NOTE: This function 1 of 2 that is git-forge specific.
 	 */
-	var getRawFileUrl = function () {
+	const getRawFileUrl = function () {
 		return location.search.substring(1)
 			.replace(/\/\/github\.com/, '//raw.githubusercontent.com')
 			.replace(/\/blob\//, '/').replace(/\/raw\//, '/');
@@ -23,7 +23,7 @@
 	 *
 	 * NOTE: This is function 2 of 2 that is git-forge specific.
 	 */
-	var isGitForgeFileUrl = function (url) {
+	const isGitForgeFileUrl = function (url) {
 		return (url.indexOf('//raw.githubusercontent.com') > 0 || url.indexOf('//bitbucket.org') > 0);
 	}
 
@@ -32,7 +32,7 @@
 	 * considering only the file extension.
 	 * @param {string} url - Any URL
 	 */
-	var isHtmlUrl = function (url) {
+	const isHtmlUrl = function (url) {
 		return (url.indexOf('.html') > 0 || url.indexOf('.htm') > 0);
 	}
 
@@ -40,7 +40,7 @@
 	 * Rewrite URL so it can be loaded using CORS proxy.
 	 * @param {string} url - Any URL
 	 */
-	var rewrite = function (url) {
+	const rewrite = function (url) {
 		let port_part;
 		if (location.port.length) {
 			port_part = ':' + location.port;
@@ -56,7 +56,7 @@
 	 * @param {object} obj - An object containing a property that is a URL
 	 * @param {string} prop - The name of the URL property
 	 */
-	var rewriteCond = function (obj, prop) {
+	const rewriteCond = function (obj, prop) {
 		// Get absolute URL
 		const url = obj[prop]
 		if (isGitForgeFileUrl(url)) {
@@ -64,13 +64,15 @@
 		}
 	}
 
-	var previewForm = document.getElementById('previewform');
+	const previewForm = document.getElementById('previewform');
 
 	// Get URL of the raw file
-	var rawFileUrl = getRawFileUrl();
+	const rawFileUrl = getRawFileUrl();
 
-	var replaceAssets = function () {
-		var frame, a, link, links = [], script, scripts = [], i, href, src;
+	const replaceAssets = function () {
+		let i, href, src;
+		const links = [];
+		const scripts = [];
 		// Framesets
 		if (document.querySelectorAll('frameset').length) {
 			// Don't replace CSS/JS if it's a frameset,
@@ -78,7 +80,7 @@
 			return;
 		}
 		// Frames
-		frame = document.querySelectorAll('iframe[src],frame[src]');
+		const frame = document.querySelectorAll('iframe[src],frame[src]');
 		for (i = 0; i < frame.length; ++i) {
 			rewriteCond(frame[i], "src");
 		}
@@ -88,7 +90,7 @@
 			rewriteCond(object[i], "data");
 		}
 		// Links
-		a = document.querySelectorAll('a[href]');
+		const a = document.querySelectorAll('a[href]');
 		for (i = 0; i < a.length; ++i) {
 			// Get absolute URL
 			href = a[i].href;
@@ -106,7 +108,7 @@
 			}
 		}
 		// Stylesheets
-		link = document.querySelectorAll('link[rel=stylesheet]');
+		const link = document.querySelectorAll('link[rel=stylesheet]');
 		for (i = 0; i < link.length; ++i) {
 			// Get absolute URL
 			href = link[i].href;
@@ -121,7 +123,7 @@
 			}
 		});
 		// Scripts
-		script = document.querySelectorAll('script[type="text/htmlpreview"]');
+		const script = document.querySelectorAll('script[type="text/htmlpreview"]');
 		for (i = 0; i < script.length; ++i) {
 			// Get absolute URL
 			src = script[i].src;
@@ -143,7 +145,7 @@
 		});
 	};
 
-	var loadHTML = function (data) {
+	const loadHTML = function (data) {
 		if (data) {
 			// Add <base> just after <head>
 			// and replace <script type="text/javascript">
@@ -161,7 +163,7 @@
 		}
 	};
 
-	var loadCSS = function (data) {
+	const loadCSS = function (data) {
 		if (data) {
 			var style = document.createElement('style');
 			style.innerHTML = data;
@@ -169,7 +171,7 @@
 		}
 	};
 
-	var loadJS = function (data) {
+	const loadJS = function (data) {
 		if (data) {
 			var script = document.createElement('script');
 			script.innerHTML = data;
@@ -177,7 +179,7 @@
 		}
 	};
 
-	var fetchProxy = function (url, options, i) {
+	const fetchProxy = function (url, options, i) {
 		var proxy = [
 			'', // try without proxy first
 			'https://api.codetabs.com/v1/proxy/?quest='
