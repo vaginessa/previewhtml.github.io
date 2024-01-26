@@ -26,11 +26,11 @@
 	var rewrite = function (url) {
 		let port_part;
 		if (location.port.length) {
-			port_part = ':' + location.port
+			port_part = ':' + location.port;
 		} else {
-			port_part = ''
+			port_part = '';
 		}
-		return location.protocol + '//' + location.hostname + port_part + location.pathname + '?' + url
+		return location.protocol + '//' + location.hostname + port_part + location.pathname + '?' + url;
 	}
 
 	var previewForm = document.getElementById('previewform');
