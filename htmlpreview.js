@@ -15,7 +15,7 @@
 		return location.search.substring(1)
 			.replace(/\/\/github\.com/, '//raw.githubusercontent.com')
 			.replace(/\/blob\//, '/').replace(/\/raw\//, '/');
-	}
+	};
 
 	/**
 	 * Returns whether the given URL points to a file on a known git forge.
@@ -26,7 +26,7 @@
 	const isGitForgeFileUrl = function (url) {
 		return (url.indexOf('//raw.githubusercontent.com') > 0
 			|| url.indexOf('//bitbucket.org') > 0);
-	}
+	};
 
 	/**
 	 * Returns whether the given URL points to an HTML file,
@@ -35,7 +35,7 @@
 	 */
 	const isHtmlUrl = function (url) {
 		return (url.indexOf('.html') > 0 || url.indexOf('.htm') > 0);
-	}
+	};
 
 	/**
 	 * Returns the base URL of our service,
@@ -49,7 +49,7 @@
 		}
 		// Fallback value
 		return 'https://git-forge-html-preview.github.io/git-forge-html-preview/?';
-	}
+	};
 
 	/**
 	 * Rewrite URL so it can be loaded using CORS proxy.
@@ -57,7 +57,7 @@
 	 */
 	const rewrite = function (url) {
 		return location.origin + location.pathname + '?' + url;
-	}
+	};
 
 	/**
 	 * Rewrite URL so it can be loaded using CORS proxy,
@@ -67,11 +67,11 @@
 	 */
 	const rewriteCond = function (obj, prop) {
 		// Get absolute URL
-		const url = obj[prop]
+		const url = obj[prop];
 		if (isGitForgeFileUrl(url)) {
 			obj[prop] = rewrite(url);
 		}
-	}
+	};
 
 	const serviceBase = getServiceBase();
 	document.getElementById("service_base").innerHTML = serviceBase + '?';
@@ -218,7 +218,7 @@
 				throw error;
 			}
 			return fetchProxy(url, options, i + 1);
-		})
+		});
 	};
 
 	if (rawFileUrl && rawFileUrl.indexOf(location.hostname) < 0) {
@@ -230,4 +230,4 @@
 	} else {
 		previewForm.style.display = 'block';
 	}
-})()
+})();
