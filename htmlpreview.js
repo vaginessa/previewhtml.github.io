@@ -55,13 +55,7 @@
 	 * @param {string} url - Any URL
 	 */
 	const rewrite = function (url) {
-		let port_part;
-		if (location.port.length) {
-			port_part = ':' + location.port;
-		} else {
-			port_part = '';
-		}
-		return location.protocol + '//' + location.hostname + port_part + location.pathname + '?' + url;
+		return location.origin + location.pathname + '?' + url;
 	}
 
 	/**
@@ -116,7 +110,9 @@
 				// Rewrite links to this document only
 				if ((a[i].protocol + '//' + a[i].hostname + a[i].pathname) == rawFileUrl) {
 					// Then rewrite URL with support for empty anchor
-					a[i].href = location.protocol + '//' + location.hostname + ':' + location.port + location.pathname + location.search + '#' + a[i].hash.substring(1);
+					a[i].href =
+						location.origin + location.pathname + location.search
+						+ '#' + a[i].hash.substring(1);
 				}
 				// Do not modify external URLs with fragment
 			} else if (isGitForgeFileUrl(href) && isHtmlUrl(href)) {
