@@ -56,7 +56,7 @@
 			return serviceBase;
 		}
 		// Fallback value
-		// eslint-disable-next-line max-len
+		// eslint-disable-next-line @stylistic/js/max-len
 		return 'https://git-forge-html-preview.github.io/git-forge-html-preview/?';
 	};
 
@@ -149,7 +149,7 @@
 	};
 
 	const replaceScripts = function () {
-		// eslint-disable-next-line max-len
+		// eslint-disable-next-line @stylistic/js/max-len
 		const script = document.querySelectorAll('script[type="text/htmlpreview"]');
 		const scripts = [];
 		let src;
@@ -200,7 +200,7 @@
 				/<head([^>]*)>/i,
 				'<head$1><base href="' + rawFileUrl + '">'
 			).replace(
-				// eslint-disable-next-line max-len
+				// eslint-disable-next-line @stylistic/js/max-len
 				/<script(\s*src=["'][^"']*["'])?(\s*type=["'](text|application)\/javascript["'])?/gi,
 				'<script type="text/htmlpreview"$1'
 			);

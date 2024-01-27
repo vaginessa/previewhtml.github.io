@@ -1,101 +1,116 @@
 # SPDX-FileCopyrightText: 2024 Robin Vobruba <hoijui.quaero@gmail.com>
 # SPDX-License-Identifier: Unlicense
 
+root: true
+reportUnusedDisableDirectives: true
 env:
   browser: true
-  es6: true
-extends: 'eslint:recommended'
-globals:
-  Atomics: readonly
-  SharedArrayBuffer: readonly
+  es2021: true
+  es2024: true
+extends: eslint:recommended
 parserOptions:
-  ecmaVersion: 2018
+  ecmaVersion: latest
   sourceType: module
+plugins:
+  - "@eslint-community/eslint-plugin-eslint-comments"
+  - "@stylistic/eslint-plugin-js"
+  - eslint-plugin-array-func
+  - eslint-plugin-i
+  - eslint-plugin-jquery
+  - eslint-plugin-no-jquery
+  - eslint-plugin-no-use-extend-native
+  - eslint-plugin-regexp
+  - eslint-plugin-sonarjs
+  - eslint-plugin-unicorn
+  - eslint-plugin-vitest
+  - eslint-plugin-vitest-globals
+  - eslint-plugin-wc
 rules:
-  accessor-pairs: error
-  array-bracket-newline: error
-  array-bracket-spacing: error
-  array-callback-return: error
-  array-element-newline: error
-  arrow-body-style: error
-  arrow-parens: error
-  arrow-spacing: error
-  block-scoped-var: error
-  block-spacing: error
-  brace-style:
-    - error
-    - 1tbs
-  callback-return: error
-  camelcase: error
-  capitalized-comments: 'off'
-  class-methods-use-this: error
-  comma-dangle: error
-  comma-spacing:
-    - error
-    - after: true
-      before: false
-  comma-style:
-    - error
-    - last
-  complexity: error
-  computed-property-spacing:
-    - error
-    - never
-  consistent-return: error
-  consistent-this: error
-  curly: error
-  default-case: error
-  dot-location:
-    - error
-    - property
-  dot-notation:
-    - error
-    - allowKeywords: true
-  eol-last: error
-  eqeqeq: 'off'
-  func-call-spacing: error
-  func-name-matching: error
-  func-names: 'off'
-  func-style:
-    - error
-    - expression
-  function-paren-newline: error
-  generator-star-spacing: error
-  global-require: error
-  guard-for-in: error
-  handle-callback-err: error
-  id-blacklist: error
-  id-length: 'off'
-  id-match: error
-  implicit-arrow-linebreak: error
-  indent: ['error', 'tab']
-  indent-legacy: 'off'
-  init-declarations: 'off'
-  jsx-quotes: error
-  key-spacing: error
-  keyword-spacing:
-    - error
-    - after: true
-      before: true
-  line-comment-position: error
-  linebreak-style:
-    - error
-    - unix
-  lines-around-comment: error
+  "@eslint-community/eslint-comments/disable-enable-pair": error
+  "@eslint-community/eslint-comments/no-aggregating-enable": error
+  "@eslint-community/eslint-comments/no-duplicate-disable": error
+  "@eslint-community/eslint-comments/no-restricted-disable": 'off'
+  "@eslint-community/eslint-comments/no-unlimited-disable": error
+  "@eslint-community/eslint-comments/no-unused-disable": error
+  "@eslint-community/eslint-comments/no-unused-enable": error
+  "@eslint-community/eslint-comments/no-use": 'off'
+  "@eslint-community/eslint-comments/require-description": 'off'
+  "@stylistic/js/array-bracket-newline": 'off'
+  "@stylistic/js/array-bracket-spacing": [error, never]
+  "@stylistic/js/array-element-newline": 'off'
+  "@stylistic/js/arrow-parens": [error, always]
+  "@stylistic/js/arrow-spacing": [error, {before: true, after: true}]
+  "@stylistic/js/block-spacing": 'off'
+  "@stylistic/js/brace-style": [error, 1tbs, {allowSingleLine: true}]
+  "@stylistic/js/comma-dangle": [error, only-multiline]
+  "@stylistic/js/comma-spacing": [error, {before: false, after: true}]
+  "@stylistic/js/comma-style": [error, last]
+  "@stylistic/js/computed-property-spacing": [error, never]
+  "@stylistic/js/dot-location": [error, property]
+  "@stylistic/js/eol-last": error
+  "@stylistic/js/function-call-spacing": [error, never]
+  "@stylistic/js/function-call-argument-newline": 'off'
+  "@stylistic/js/function-paren-newline": 'off'
+  "@stylistic/js/generator-star-spacing": 'off'
+  "@stylistic/js/implicit-arrow-linebreak": 'off'
+  "@stylistic/js/indent": ['error', 'tab']
+    #[error, 2, {ignoreComments: true, SwitchCase: 1}]
+  "@stylistic/js/key-spacing": error
+  "@stylistic/js/keyword-spacing": error
+  "@stylistic/js/linebreak-style": [error, unix]
+  "@stylistic/js/lines-around-comment": 'off'
+  "@stylistic/js/lines-between-class-members": 'off'
+  "@stylistic/js/max-len": error
+  "@stylistic/js/max-statements-per-line": error
+  "@stylistic/js/multiline-ternary": 'off'
+  "@stylistic/js/new-parens": error
+  "@stylistic/js/newline-per-chained-call": 'off'
+  "@stylistic/js/no-confusing-arrow": 'off'
+  "@stylistic/js/no-extra-parens": 'off'
+  "@stylistic/js/no-extra-semi": error
+  "@stylistic/js/no-floating-decimal": 'off'
+  "@stylistic/js/no-mixed-operators": 'off'
+  "@stylistic/js/no-mixed-spaces-and-tabs": error
+  "@stylistic/js/no-multi-spaces": [error, {ignoreEOLComments: true, exceptions: {Property: true}}]
+  "@stylistic/js/no-multiple-empty-lines": [error, {max: 1, maxEOF: 0, maxBOF: 0}]
+  "@stylistic/js/no-tabs": [error, allowIndentationTabs: true]
+  "@stylistic/js/no-trailing-spaces": error
+  "@stylistic/js/no-whitespace-before-property": error
+  "@stylistic/js/nonblock-statement-body-position": error
+  "@stylistic/js/object-curly-newline": 'off'
+  "@stylistic/js/object-curly-spacing": [error, never]
+  "@stylistic/js/object-property-newline": 'off'
+  "@stylistic/js/one-var-declaration-per-line": 'off'
+  "@stylistic/js/operator-linebreak": ['error', 'before']
+  "@stylistic/js/padded-blocks": [error, never]
+  "@stylistic/js/padding-line-between-statements": 'off'
+  "@stylistic/js/quote-props": 'off'
+  "@stylistic/js/quotes": [error, single, {avoidEscape: true, allowTemplateLiterals: true}]
+  "@stylistic/js/rest-spread-spacing": [error, never]
+  "@stylistic/js/semi": [error, always, {omitLastInOneLineBlock: true}]
+  "@stylistic/js/semi-spacing": [error, {before: false, after: true}]
+  "@stylistic/js/semi-style": [error, last]
+  "@stylistic/js/space-before-blocks": [error, always]
+  "@stylistic/js/space-before-function-paren": 'off'
+  "@stylistic/js/space-in-parens": [error, never]
+  "@stylistic/js/space-infix-ops": error
+  "@stylistic/js/space-unary-ops": error
+  "@stylistic/js/spaced-comment": [error, always]
+  "@stylistic/js/switch-colon-spacing": error
+  "@stylistic/js/template-curly-spacing": [error, never]
+  "@stylistic/js/template-tag-spacing": [error, never]
+  "@stylistic/js/wrap-iife": [error, inside]
+  "@stylistic/js/wrap-regex": error
+  "@stylistic/js/yield-star-spacing": [error, after]
   lines-around-directive: error
-  lines-between-class-members: error
   max-classes-per-file: error
   max-depth: error
-  max-len: error
-  max-lines: error
+  max-lines: off
   max-lines-per-function: error
   max-nested-callbacks: error
   max-params: error
   max-statements: error
-  max-statements-per-line: error
-  multiline-comment-style:
-    - error
-    - separate-lines
+  multiline-comment-style: [error, separate-lines]
   multiline-ternary: error
   new-cap: error
   new-parens: error
@@ -110,7 +125,6 @@ rules:
   no-buffer-constructor: error
   no-caller: error
   no-catch-shadow: error
-  no-confusing-arrow: error
   no-continue: error
   no-div-regex: error
   no-duplicate-imports: error
@@ -121,15 +135,11 @@ rules:
   no-extend-native: error
   no-extra-bind: error
   no-extra-label: error
-  no-extra-parens: 'off'
-  no-floating-decimal: error
   no-implicit-coercion: error
   no-implicit-globals: error
   no-implied-eval: error
   no-inline-comments: 'off'
-  no-inner-declarations:
-    - error
-    - functions
+  no-inner-declarations: [error, functions]
   no-invalid-this: error
   no-iterator: error
   no-label-var: error
@@ -139,12 +149,9 @@ rules:
   no-loop-func: error
   no-magic-numbers: 'off'
   no-misleading-character-class: error
-  no-mixed-operators: error
   no-mixed-requires: error
   no-multi-assign: error
-  no-multi-spaces: error
   no-multi-str: error
-  no-multiple-empty-lines: error
   no-native-reassign: error
   no-negated-condition: error
   no-negated-in-lhs: error
@@ -157,9 +164,7 @@ rules:
   no-octal-escape: error
   no-param-reassign: 'off'
   no-path-concat: error
-  no-plusplus:
-    - error
-    - allowForLoopAfterthoughts: true
+  no-plusplus: [error, allowForLoopAfterthoughts: true]
   no-process-env: error
   no-process-exit: error
   no-proto: error
@@ -178,9 +183,6 @@ rules:
   no-shadow-restricted-names: error
   no-spaced-func: error
   no-sync: error
-  no-tabs:
-    - error
-    - allowIndentationTabs: true
   no-template-curly-in-string: error
   no-ternary: error
   no-throw-literal: error
@@ -198,16 +200,13 @@ rules:
   no-useless-constructor: error
   no-useless-rename: error
   no-useless-return: error
-  no-var: 'off'
+  no-var: error
   no-void: error
   no-warning-comments: error
-  no-whitespace-before-property: error
   no-with: error
   nonblock-statement-body-position: error
   object-curly-newline: error
-  object-curly-spacing:
-    - error
-    - never
+  object-curly-spacing: [error, never]
   object-shorthand: error
   one-var: 'off'
   one-var-declaration-per-line: 'off'
@@ -234,41 +233,23 @@ rules:
   require-jsdoc: error
   require-unicode-regexp: 'off'
   rest-spread-spacing: error
-  semi: error
-  semi-spacing:
-    - error
-    - after: true
-      before: false
-  semi-style:
-    - error
-    - last
+  semi: [error, always]
   sort-imports: error
-  sort-keys:
-    - error
-    - asc
+  sort-keys: [error, asc]
   sort-vars: 'off'
   space-before-blocks: error
   space-before-function-paren: error
-  space-in-parens:
-    - error
-    - never
+  space-in-parens: [error, never]
   space-infix-ops: error
   space-unary-ops: error
-  spaced-comment:
-    - error
-    - always
+  spaced-comment: [error, always]
   strict: error
   switch-colon-spacing: error
   symbol-description: error
   template-curly-spacing: error
   template-tag-spacing: error
-  unicode-bom:
-    - error
-    - never
+  unicode-bom: [error, never]
   valid-jsdoc: error
   vars-on-top: 'off'
-  wrap-regex: error
   yield-star-spacing: error
-  yoda:
-    - error
-    - never
+  yoda: [error, never]
