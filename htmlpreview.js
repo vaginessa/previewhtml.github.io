@@ -178,7 +178,7 @@
 
 	const loadCSS = function (data) {
 		if (data) {
-			var style = document.createElement('style');
+			const style = document.createElement('style');
 			style.innerHTML = data;
 			document.head.appendChild(style);
 		}
@@ -186,14 +186,14 @@
 
 	const loadJS = function (data) {
 		if (data) {
-			var script = document.createElement('script');
+			const script = document.createElement('script');
 			script.innerHTML = data;
 			document.body.appendChild(script);
 		}
 	};
 
 	const fetchProxy = function (url, options, i) {
-		var proxy = [
+		const proxy = [
 			'', // try without proxy first
 			'https://api.codetabs.com/v1/proxy/?quest='
 		];
