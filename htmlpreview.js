@@ -81,29 +81,24 @@
 	// Get URL of the raw file
 	const rawFileUrl = getRawFileUrl();
 
-	const replaceAssets = function () {
-		let i, href, src;
-		const links = [];
-		const scripts = [];
-		// Framesets
-		if (document.querySelectorAll('frameset').length) {
-			// Don't replace CSS/JS if it's a frameset,
-			// because it will be erased by document.write()
-			return;
-		}
-		// Frames
+	const replaceFrames = function () {
 		const frame = document.querySelectorAll('iframe[src],frame[src]');
-		for (i = 0; i < frame.length; ++i) {
+		for (let i = 0; i < frame.length; ++i) {
 			rewriteCond(frame[i], "src");
 		}
-		// Objects
+	};
+
+	const replaceObjects = function () {
 		const object = document.querySelectorAll('object[data]');
-		for (i = 0; i < object.length; ++i) {
+		for (let i = 0; i < object.length; ++i) {
 			rewriteCond(object[i], "data");
 		}
-		// Links
+	};
+
+	const replaceLinks = function () {
 		const a = document.querySelectorAll('a[href]');
-		for (i = 0; i < a.length; ++i) {
+		let href;
+		for (let i = 0; i < a.length; ++i) {
 			// Get absolute URL
 			href = a[i].href;
 			// Check if it's an anchor
@@ -111,8 +106,8 @@
 				// Rewrite links to this document only
 				if ((a[i].protocol + '//' + a[i].hostname + a[i].pathname) == rawFileUrl) {
 					// Then rewrite URL with support for empty anchor
-					a[i].href =
-						location.origin + location.pathname + location.search
+					a[i].href
+						= location.origin + location.pathname + location.search
 						+ '#' + a[i].hash.substring(1);
 				}
 				// Do not modify external URLs with fragment
@@ -121,9 +116,13 @@
 				a[i].href = rewrite(href);
 			}
 		}
-		// Stylesheets
+	};
+
+	const replaceStylesheets = function () {
 		const link = document.querySelectorAll('link[rel=stylesheet]');
-		for (i = 0; i < link.length; ++i) {
+		const links = [];
+		let href;
+		for (let i = 0; i < link.length; ++i) {
 			// Get absolute URL
 			href = link[i].href;
 			if (isGitForgeFileUrl(href)) {
@@ -132,15 +131,18 @@
 			}
 		}
 		Promise.all(links).then(function (res) {
-			for (i = 0; i < res.length; ++i) {
+			for (let i = 0; i < res.length; ++i) {
 				loadCSS(res[i]);
 			}
 		});
-		// Scripts
-		const script = document.querySelectorAll(
-			'script[type="text/htmlpreview"]'
-		);
-		for (i = 0; i < script.length; ++i) {
+	};
+
+	const replaceScripts = function () {
+		// eslint-disable-next-line max-len
+		const script = document.querySelectorAll('script[type="text/htmlpreview"]');
+		const scripts = [];
+		let src;
+		for (let i = 0; i < script.length; ++i) {
 			// Get absolute URL
 			src = script[i].src;
 			if (isGitForgeFileUrl(src)) {
@@ -153,7 +155,7 @@
 			}
 		}
 		Promise.all(scripts).then(function (res) {
-			for (i = 0; i < res.length; ++i) {
+			for (let i = 0; i < res.length; ++i) {
 				loadJS(res[i]);
 			}
 			// Dispatch DOMContentLoaded event after loading all scripts
@@ -162,6 +164,20 @@
 				{bubbles: true, cancelable: true}
 			));
 		});
+	};
+
+	const replaceAssets = function () {
+		// Framesets
+		if (document.querySelectorAll('frameset').length) {
+			// Don't replace CSS/JS if it's a frameset,
+			// because it will be erased by document.write()
+			return;
+		}
+		replaceFrames();
+		replaceObjects();
+		replaceLinks();
+		replaceStylesheets();
+		replaceScripts();
 	};
 
 	const loadHTML = function (data) {
