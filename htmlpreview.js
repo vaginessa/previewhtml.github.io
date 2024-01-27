@@ -52,8 +52,7 @@
 	const getServiceBase = function () {
 		if (window.location) {
 			const loc = window.location;
-			const serviceBase = loc.origin + loc.pathname;
-			return serviceBase;
+			return loc.origin + loc.pathname;
 		}
 		// Fallback value
 		// eslint-disable-next-line @stylistic/js/max-len
