@@ -85,7 +85,7 @@
 	};
 
 	const serviceBase = getServiceBase();
-	document.getElementById("service_base").innerHTML = serviceBase + '?';
+	document.getElementById('service_base').innerHTML = serviceBase + '?';
 
 	const previewForm = document.getElementById('previewform');
 
@@ -95,14 +95,14 @@
 	const replaceFrames = function () {
 		const frame = document.querySelectorAll('iframe[src],frame[src]');
 		for (let i = 0; i < frame.length; ++i) {
-			rewriteCond(frame[i], "src");
+			rewriteCond(frame[i], 'src');
 		}
 	};
 
 	const replaceObjects = function () {
 		const object = document.querySelectorAll('object[data]');
 		for (let i = 0; i < object.length; ++i) {
-			rewriteCond(object[i], "data");
+			rewriteCond(object[i], 'data');
 		}
 	};
 
