@@ -201,7 +201,7 @@
 			// Check if it's an anchor
 			if (href.indexOf('#') > 0) {
 				// Rewrite links to this document only
-				if ((a[i].protocol + '//' + a[i].hostname + a[i].pathname) == rawFileUrl) {
+				if ((a[i].origin + a[i].pathname) == rawFileUrl) {
 					// Then rewrite URL with support for empty anchor
 					a[i].href
 						= location.origin + location.pathname + location.search
