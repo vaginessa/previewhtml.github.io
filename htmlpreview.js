@@ -204,7 +204,8 @@
 
 	const fetchProxy = function (url, options, i) {
 		const proxy = [
-			'', // try without proxy first
+			// try without proxy first
+			'',
 			'https://api.codetabs.com/v1/proxy/?quest='
 		];
 		return fetch(proxy[i] + url, options).then(function (res) {
