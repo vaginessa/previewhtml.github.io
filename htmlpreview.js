@@ -4,6 +4,36 @@
 
 // eslint-disable-next-line max-statements
 (function () {
+	/**
+	 * Given a set of variant values, creates an enum.
+	 * @param {string[]} variants -
+	 *   A list of unique strings, representing the enum variants.
+	 * @return {object} an enum-like, immutable dictionary
+	 */
+	const createEnum = function (variants) {
+		const enumObject = {};
+		for (const vari of variants) {
+			enumObject[vari] = Symbol(vari);
+		}
+		return Object.freeze(enumObject);
+	};
+
+	const FORGE_SOFTWARES = createEnum([
+		'GitHub',
+		'BitBucket',
+		'GitLab',
+		'ForgeJo',
+		'SourceHut'
+	]);
+
+	const FORGE_HOSTS = createEnum([
+		'GitHub_com',
+		'BitBucket_org',
+		'GitLab_com',
+		'Allmende_io',
+		'CodeBerg_org',
+		'Git_Sr_Ht'
+	]);
 
 	/**
 	 * If the first parameter is a URL to a file on a known git forge,
@@ -21,17 +51,74 @@
 	};
 
 	/**
+	 * Extracts the forge software and host,
+	 * the given a URL that points to a file on a known git forge.
+	 * @param {URL} url - Any URL,
+	 *   potentially pointing to a git hosted raw (plain-text) file
+	 * @returns {{ software: Symbol, host: Symbol}} `(software, host)`,
+	 *   or `(null, null)` if unsupported/unidentified/
+	 *   not a git hosted raw file.
+	 *
+	 * NOTE: This is function 2 of 2 that is git-forge specific.
+	 */
+	// eslint-disable-next-line max-statements
+	const extractForge = function (url) {
+		let software = null;
+		let host = null;
+		if (url.host == 'raw.githubusercontent.com') {
+			software = FORGE_SOFTWARES.GitHub;
+			host = FORGE_HOSTS.GitHub_com;
+		} else if (url.host == 'bitbucket.org'
+				&& (/\/[^/]+\/[^/]+\/raw\/[^/]+/).test(url.pathname)) {
+			software = FORGE_SOFTWARES.BitBucket;
+			host = FORGE_HOSTS.BitBucket_org;
+		} else if (url.host == 'gitlab.com'
+				&& (/\/[^/]+\/.+\/(-\/)?raw\/[^/]+/).test(url.pathname)) {
+			software = FORGE_SOFTWARES.GitLab;
+			host = FORGE_HOSTS.GitLab_com;
+		} else if (url.host == 'lab.allmende.io'
+				&& (/\/[^/]+\/.+\/(-\/)?raw\/[^/]+/).test(url.pathname)) {
+			software = FORGE_SOFTWARES.GitLab;
+			host = FORGE_HOSTS.Lab_Allmende_io;
+		} else if (url.host == 'codeberg.org'
+				&& (/\/[^/]+\/[^/]+\/raw\/[^/]+/).test(url.pathname)) {
+			software = FORGE_SOFTWARES.ForgeJo;
+			host = FORGE_HOSTS.CodeBerg_org;
+		} else if (url.host == 'git.sr.ht'
+				&& (/\/~[^/]+\/[^/]+\/blob\/[^/]+/).test(url.pathname)) {
+			software = FORGE_SOFTWARES.SourceHut;
+			host = FORGE_HOSTS.Git_Sr_Ht;
+		}
+		return [software, host];
+	};
+
+	/**
+	 * Indicates whether the given URL points to a file on a known git forge.
+	 * @param {URL} url - Any URL,
+	 *   potentially pointing to a git hosted raw (plain-text) file
+	 * @returns {boolean} `true` if the given URL indeed does point
+	 *   to a git hosted raw file
+	 */
+	const isGitForgeFileUrlParsed = function (url) {
+		return extractForge(url)[0] !== null;
+	};
+
+	/**
 	 * Indicates whether the given URL points to a file on a known git forge.
 	 * @param {string} url - Any URL,
 	 *   potentially pointing to a git hosted raw (plain-text) file
 	 * @returns {boolean} `true` if the given URL indeed does point
 	 *   to a git hosted raw file
-	 *
-	 * NOTE: This is function 2 of 2 that is git-forge specific.
 	 */
 	const isGitForgeFileUrl = function (url) {
-		return (url.indexOf('//raw.githubusercontent.com') > 0
-			|| url.indexOf('//bitbucket.org') > 0);
+		try {
+			return isGitForgeFileUrlParsed(new URL(url));
+		} catch (err) {
+			if (err instanceof RangeError) {
+				return false;
+			}
+			throw err;
+		}
 	};
 
 	/**
