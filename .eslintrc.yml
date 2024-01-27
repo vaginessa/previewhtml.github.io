@@ -26,7 +26,7 @@ rules:
     - error
     - 1tbs
   callback-return: error
-  camelcase: 'off'
+  camelcase: error
   capitalized-comments: 'off'
   class-methods-use-this: error
   comma-dangle: error
@@ -68,7 +68,7 @@ rules:
   id-length: 'off'
   id-match: error
   implicit-arrow-linebreak: error
-  indent: 'off'
+  indent: ['error', 'tab']
   indent-legacy: 'off'
   init-declarations: 'off'
   jsx-quotes: error
@@ -77,7 +77,7 @@ rules:
     - error
     - after: true
       before: true
-  line-comment-position: 'off'
+  line-comment-position: error
   linebreak-style:
     - error
     - unix
@@ -86,12 +86,12 @@ rules:
   lines-between-class-members: error
   max-classes-per-file: error
   max-depth: error
-  max-len: 'off'
+  max-len: error
   max-lines: error
-  max-lines-per-function: 'off'
+  max-lines-per-function: error
   max-nested-callbacks: error
   max-params: error
-  max-statements: 'off'
+  max-statements: error
   max-statements-per-line: error
   multiline-comment-style:
     - error
@@ -212,7 +212,7 @@ rules:
   one-var: 'off'
   one-var-declaration-per-line: 'off'
   operator-assignment: error
-  operator-linebreak: error
+  operator-linebreak:  ['error', 'before']
   padded-blocks: 'off'
   padding-line-between-statements: error
   prefer-arrow-callback: 'off'
@@ -234,7 +234,7 @@ rules:
   require-jsdoc: error
   require-unicode-regexp: 'off'
   rest-spread-spacing: error
-  semi: 'off'
+  semi: error
   semi-spacing:
     - error
     - after: true
@@ -252,7 +252,7 @@ rules:
   space-in-parens:
     - error
     - never
-  space-infix-ops: 'off'
+  space-infix-ops: error
   space-unary-ops: error
   spaced-comment:
     - error
@@ -265,7 +265,7 @@ rules:
   unicode-bom:
     - error
     - never
-  valid-jsdoc: 'off'
+  valid-jsdoc: error
   vars-on-top: 'off'
   wrap-regex: error
   yield-star-spacing: error

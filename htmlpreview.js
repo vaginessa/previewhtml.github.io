@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
+// eslint-disable-next-line max-statements
 (function () {
 
 	/**
@@ -55,6 +56,7 @@
 			return serviceBase;
 		}
 		// Fallback value
+		// eslint-disable-next-line max-len
 		return 'https://git-forge-html-preview.github.io/git-forge-html-preview/?';
 	};
 
@@ -198,6 +200,7 @@
 				/<head([^>]*)>/i,
 				'<head$1><base href="' + rawFileUrl + '">'
 			).replace(
+				// eslint-disable-next-line max-len
 				/<script(\s*src=["'][^"']*["'])?(\s*type=["'](text|application)\/javascript["'])?/gi,
 				'<script type="text/htmlpreview"$1'
 			);
