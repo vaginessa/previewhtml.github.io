@@ -24,7 +24,8 @@
 	 * NOTE: This is function 2 of 2 that is git-forge specific.
 	 */
 	const isGitForgeFileUrl = function (url) {
-		return (url.indexOf('//raw.githubusercontent.com') > 0 || url.indexOf('//bitbucket.org') > 0);
+		return (url.indexOf('//raw.githubusercontent.com') > 0
+			|| url.indexOf('//bitbucket.org') > 0);
 	}
 
 	/**
@@ -136,7 +137,9 @@
 			}
 		});
 		// Scripts
-		const script = document.querySelectorAll('script[type="text/htmlpreview"]');
+		const script = document.querySelectorAll(
+			'script[type="text/htmlpreview"]'
+		);
 		for (i = 0; i < script.length; ++i) {
 			// Get absolute URL
 			src = script[i].src;
@@ -154,7 +157,10 @@
 				loadJS(res[i]);
 			}
 			// Dispatch DOMContentLoaded event after loading all scripts
-			document.dispatchEvent(new Event('DOMContentLoaded', {bubbles: true, cancelable: true}));
+			document.dispatchEvent(new Event(
+				'DOMContentLoaded',
+				{bubbles: true, cancelable: true}
+			));
 		});
 	};
 
@@ -163,9 +169,13 @@
 			// Add <base> just after <head>
 			// and replace <script type="text/javascript">
 			// with <script type="text/htmlpreview">
-			data = data
-				.replace(/<head([^>]*)>/i, '<head$1><base href="' + rawFileUrl + '">')
-				.replace(/<script(\s*src=["'][^"']*["'])?(\s*type=["'](text|application)\/javascript["'])?/gi, '<script type="text/htmlpreview"$1');
+			data = data.replace(
+				/<head([^>]*)>/i,
+				'<head$1><base href="' + rawFileUrl + '">'
+			).replace(
+				/<script(\s*src=["'][^"']*["'])?(\s*type=["'](text|application)\/javascript["'])?/gi,
+				'<script type="text/htmlpreview"$1'
+			);
 			// Delay updating document to have it cleared before
 			setTimeout(function () {
 				document.open();
@@ -199,7 +209,8 @@
 		];
 		return fetch(proxy[i] + url, options).then(function (res) {
 			if (!res.ok) {
-				throw new Error('Cannot load ' + url + ': ' + res.status + ' ' + res.statusText);
+				const errMsg = res.status + ' ' + res.statusText;
+				throw new Error('Cannot load ' + url + ': ' + errMsg);
 			}
 			return res.text();
 		}).catch(function (error) {
