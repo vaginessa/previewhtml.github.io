@@ -199,7 +199,7 @@
 			// Get absolute URL
 			href = a[i].href;
 			// Check if it's an anchor
-			if (href.indexOf('#') > 0) {
+			if (a[i].hash.length > 0) {
 				// Rewrite links to this document only
 				if ((a[i].origin + a[i].pathname) == rawFileUrl) {
 					// Then rewrite URL with support for empty anchor
