@@ -233,7 +233,6 @@ rules:
   require-jsdoc: error
   require-unicode-regexp: 'off'
   rest-spread-spacing: error
-  semi: [error, always]
   sort-imports: error
   sort-keys: [error, asc]
   sort-vars: 'off'
