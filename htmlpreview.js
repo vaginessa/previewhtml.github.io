@@ -96,7 +96,8 @@
 	const extractForge = function (url) {
 		let software = null;
 		let host = null;
-		if (url.host == 'raw.githubusercontent.com') {
+		if (url.host == 'raw.githubusercontent.com'
+				|| url.host == 'github.com') {
 			software = FORGE_SOFTWARES.GitHub;
 			host = FORGE_HOSTS.GitHub_com;
 		} else if (url.host == 'bitbucket.org'
