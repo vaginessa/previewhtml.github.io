@@ -32,6 +32,7 @@
 		'BitBucket_org',
 		'GitLab_com',
 		'Allmende_io',
+		'GitLab_OpenSourceEcology_de',
 		'CodeBerg_org',
 		'Git_Sr_Ht'
 	]);
@@ -114,6 +115,10 @@
 				&& RE_GITLAB_PATH.test(url.pathname)) {
 			software = FORGE_SOFTWARES.GitLab;
 			host = FORGE_HOSTS.Lab_Allmende_io;
+		} else if (url.host == 'gitlab.opensourceecology.de'
+				&& RE_GITLAB_PATH.test(url.pathname)) {
+			software = FORGE_SOFTWARES.GitLab;
+			host = FORGE_HOSTS.GitLab_OpenSourceEcology_de;
 		} else if (url.host == 'codeberg.org'
 				&& (/^\/[^/]+\/[^/]+\/(src|raw)\/[^/]+/).test(url.pathname)) {
 			software = FORGE_SOFTWARES.ForgeJo;
