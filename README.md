@@ -26,9 +26,13 @@ Currently supported git forges:
 
 - [x] GitHub
 - [x] BitBucket
-- [ ] GitLab
-- [ ] ForgeJo (CodeBerg)
-- [ ] SourceHut
+- [x] GitLab
+  - [x] gitlab.com
+  - [x] lab.allmende.io
+  - [x] gitlab.opensourceecology.de
+- [x] ForgeJo
+  - [x] codeberg.org
+- [x] SourceHut
 - [ ] Gitea
 
 We have a collection of the [file URLs](forges.md) for the above.

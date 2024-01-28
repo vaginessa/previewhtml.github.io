@@ -48,14 +48,67 @@
 	 *
 	 * NOTE: This function 1st of 2 that is git-forge specific.
 	 */
+	// eslint-disable-next-line max-statements
 	const rawifyForgeUrl = function (forgeFileUrl) {
 		if (forgeFileUrl === null) {
 			return null;
 		}
 
-		return forgeFileUrl
-			.replace(/\/\/github\.com/, '//raw.githubusercontent.com')
-			.replace(/\/blob\//, '/').replace(/\/raw\//, '/');
+		const forge = extractForge(forgeFileUrl);
+		const sw = forge[0];
+		if (sw === null) {
+			// do nothing
+		} else if (sw === FORGE_SOFTWARES.GitHub) {
+			forgeFileUrl.hostname = 'raw.githubusercontent.com';
+			forgeFileUrl.pathname = forgeFileUrl.pathname.replace(
+				/^(\/[^/]+\/[^/]+)\/(blob|raw)\/([^/]+\/)/,
+				'$1/$3'
+			);
+		} else if (sw === FORGE_SOFTWARES.BitBucket) {
+			forgeFileUrl.pathname = forgeFileUrl.pathname.replace(
+				/^(\/[^/]+\/[^/]+)\/src\/([^/]+\/)/,
+				'$1/raw/$2'
+			);
+		} else if (sw === FORGE_SOFTWARES.GitLab) {
+			forgeFileUrl.pathname = forgeFileUrl.pathname.replace(
+				/^(\/[^/]+\/.+?)\/(-\/)?blob\/([^/]+\/)/,
+				'$1/-/raw/$3'
+			);
+		} else if (sw === FORGE_SOFTWARES.ForgeJo) {
+			forgeFileUrl.pathname = forgeFileUrl.pathname.replace(
+				/^(\/[^/]+\/[^/]+)\/src\/([^/]+\/)/,
+				'$1/raw/$2'
+			);
+		} else if (sw === FORGE_SOFTWARES.SourceHut) {
+			forgeFileUrl.pathname = forgeFileUrl.pathname.replace(
+				/^(\/~[^/]+\/[^/]+)\/tree\/([^/]+)\/item\/([^/]+)/,
+				'$1/blob/$2/$3'
+			);
+		} else {
+			reportError('Unsupported git-forge software: ' + sw.toString());
+		}
+		return forgeFileUrl;
+	};
+
+	/**
+	 * Takes any URL to a file on a known git forge,
+	 * and returns the raw version of that files URL on the same forge.
+	 * If it already is the raw version,
+	 * this function just returns it as is.
+	 * @param {string} previewFileUrl - Any URL,
+	 *   potentially pointing to a git hosted raw (plain-text) file
+	 * @returns {URL} The raw version of the (git hosted) file URL.
+	 *
+	 * NOTE: This function 1st of 2 that is git-forge specific.
+	 */
+	const rawifyForgeUrlStr = function (previewFileUrl) {
+		let previewFileUrlParsed;
+		try {
+			previewFileUrlParsed = new URL(previewFileUrl);
+		} catch (err) {
+			reportError('Invalid URL provided in parameter "url"');
+		}
+		return rawifyForgeUrl(previewFileUrlParsed);
 	};
 
 	/**
@@ -86,9 +139,9 @@
 		const previewFileUrl = params.get('url');
 		if (previewFileUrl === null) {
 			reportError('Missing required parameter "url"');
+			// reportError('Please use "...?url=..." vs the old "...?..."');
 		}
-
-		return rawifyForgeUrl(previewFileUrl);
+		return rawifyForgeUrlStr(previewFileUrl).href;
 	};
 
 	const RE_GITLAB_PATH = /^\/[^/]+\/.+\/(-\/)?(blob|raw)\/[^/]+/;
