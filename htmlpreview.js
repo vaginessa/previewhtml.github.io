@@ -37,13 +37,32 @@
 	]);
 
 	/**
+	 * Takes any URL to a file on a known git forge,
+	 * and returns the raw version of that files URL on the same forge.
+	 * If it already is the raw version,
+	 * this function just returns it as is.
+	 * @param {URL} forgeFileUrl - Any URL,
+	 *   potentially pointing to a git hosted raw (plain-text) file
+	 * @returns {URL} The raw version of the (git hosted) file URL.
+	 *
+	 * NOTE: This function 1st of 2 that is git-forge specific.
+	 */
+	const rawifyForgeUrl = function (forgeFileUrl) {
+		if (forgeFileUrl === null) {
+			return null;
+		}
+
+		return forgeFileUrl
+			.replace(/\/\/github\.com/, '//raw.githubusercontent.com')
+			.replace(/\/blob\//, '/').replace(/\/raw\//, '/');
+	};
+
+	/**
 	 * If the first parameter is a URL to a file on a known git forge,
 	 * returns the URL to the raw version of this file
 	 * (vs the HTML/Web view of it).
 	 * @returns {string} The raw version of the (git hosted) file URL
 	 *   requested to be previewed.
-	 *
-	 * NOTE: This function 1 of 2 that is git-forge specific.
 	 */
 	const getRawFileUrl = function () {
 		if (location.search.length === 0) {
@@ -59,9 +78,7 @@
 			throw new SyntaxError('Missing required parameter "url"!');
 		}
 
-		return previewFileUrl
-			.replace(/\/\/github\.com/, '//raw.githubusercontent.com')
-			.replace(/\/blob\//, '/').replace(/\/raw\//, '/');
+		return rawifyForgeUrl(previewFileUrl);
 	};
 
 	/**
@@ -73,7 +90,7 @@
 	 *   or `(null, null)` if unsupported/unidentified/
 	 *   not a git hosted raw file.
 	 *
-	 * NOTE: This is function 2 of 2 that is git-forge specific.
+	 * NOTE: This is function 2nd of 2 that is git-forge specific.
 	 */
 	// eslint-disable-next-line max-statements
 	const extractForge = function (url) {
