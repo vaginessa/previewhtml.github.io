@@ -11,8 +11,8 @@ SPDX-License-Identifier: Apache-2.0
     https://img.shields.io/badge/License-Apache--2.0-blue.svg)](
     LICENSE.txt)
 [![REUSE status](
-    https://api.reuse.software/badge/github.com/git-forge-html-preview/git-forge-html-preview)](
-    https://api.reuse.software/info/github.com/git-forge-html-preview/git-forge-html-preview)
+    https://api.reuse.software/badge/github.com/html-preview/html-preview.github.io)](
+    https://api.reuse.software/info/github.com/html-preview/html-preview.github.io)
 
 Allows to render HTML files on git forges (like GitHub) in your browser,
 without cloning or downloading.
@@ -45,11 +45,11 @@ so they cannot be interpreted in their native form by the browser.
 
 In order to use it,
 just prepend this fragment to the URL of any HTML file:
-**[https://htmlpreview.github.io/?](https://htmlpreview.github.io/?)**
+**[https://html-preview.github.io/?](https://html-preview.github.io/?)**
 e.g.:
 
-- <https://htmlpreview.github.io/?https://github.com/twbs/bootstrap/gh-pages/2.3.2/index.html>
-- <https://htmlpreview.github.io/?https://github.com/documentcloud/backbone/blob/master/examples/todos/index.html>
+- <https://html-preview.github.io/?https://github.com/twbs/bootstrap/gh-pages/2.3.2/index.html>
+- <https://html-preview.github.io/?https://github.com/documentcloud/backbone/blob/master/examples/todos/index.html>
 
 What it does:
 

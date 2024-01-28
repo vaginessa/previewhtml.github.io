@@ -1,4 +1,5 @@
 // SPDX-FileCopyrightText: 2012 - 2021 Jerzy Głowacki <jerzyglowacki@gmail.com>
+// SPDX-FileCopyrightText: 2024 Robin Vobruba <hoijui.quaero@gmail.com>
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -142,8 +143,7 @@
 			return loc.origin + loc.pathname;
 		}
 		// Fallback value
-		// eslint-disable-next-line @stylistic/js/max-len
-		return 'https://git-forge-html-preview.github.io/git-forge-html-preview/?';
+		return 'https://html-preview.github.io/?';
 	};
 
 	/**
