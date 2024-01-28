@@ -81,7 +81,7 @@
 		return rawifyForgeUrl(previewFileUrl);
 	};
 
-	const RE_GITLAB_PATH = /\/[^/]+\/.+\/(-\/)?|raw\/[^/]+/;
+	const RE_GITLAB_PATH = /^\/[^/]+\/.+\/(-\/)?(blob|raw)\/[^/]+/;
 
 	/**
 	 * Extracts the forge software and host,
@@ -103,7 +103,7 @@
 			software = FORGE_SOFTWARES.GitHub;
 			host = FORGE_HOSTS.GitHub_com;
 		} else if (url.host == 'bitbucket.org'
-				&& (/\/[^/]+\/[^/]+\/raw\/[^/]+/).test(url.pathname)) {
+				&& (/^\/[^/]+\/[^/]+\/(src|raw)\/[^/]+/).test(url.pathname)) {
 			software = FORGE_SOFTWARES.BitBucket;
 			host = FORGE_HOSTS.BitBucket_org;
 		} else if (url.host == 'gitlab.com'
@@ -115,11 +115,11 @@
 			software = FORGE_SOFTWARES.GitLab;
 			host = FORGE_HOSTS.Lab_Allmende_io;
 		} else if (url.host == 'codeberg.org'
-				&& (/\/[^/]+\/[^/]+\/raw\/[^/]+/).test(url.pathname)) {
+				&& (/^\/[^/]+\/[^/]+\/(src|raw)\/[^/]+/).test(url.pathname)) {
 			software = FORGE_SOFTWARES.ForgeJo;
 			host = FORGE_HOSTS.CodeBerg_org;
 		} else if (url.host == 'git.sr.ht'
-				&& (/\/~[^/]+\/[^/]+\/blob\/[^/]+/).test(url.pathname)) {
+				&& (/^\/~[^/]+\/[^/]+\/(tree|blob)\/[^/]+/).test(url.pathname)) {
 			software = FORGE_SOFTWARES.SourceHut;
 			host = FORGE_HOSTS.Git_Sr_Ht;
 		}
