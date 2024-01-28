@@ -46,7 +46,20 @@
 	 * NOTE: This function 1 of 2 that is git-forge specific.
 	 */
 	const getRawFileUrl = function () {
-		return location.search.substring(1)
+		if (location.search.length === 0) {
+			return null;
+		}
+
+		const params = new URLSearchParams(location.search);
+		const previewFileUrl = params.get('url');
+		if (previewFileUrl === null) {
+			const errP = document.createElement('p');
+			errP.innerHTML = 'Please use "...?url=..." vs the old "...?..."!';
+			document.body.appendChild(errP);
+			throw new SyntaxError('Missing required parameter "url"!');
+		}
+
+		return previewFileUrl
 			.replace(/\/\/github\.com/, '//raw.githubusercontent.com')
 			.replace(/\/blob\//, '/').replace(/\/raw\//, '/');
 	};
@@ -152,7 +165,7 @@
 	 * @returns {string} The re-routed (for preview) version of the provided URL
 	 */
 	const rewrite = function (url) {
-		return location.origin + location.pathname + '?' + url;
+		return location.origin + location.pathname + '?url=' + url;
 	};
 
 	/**
@@ -171,7 +184,7 @@
 	};
 
 	const serviceBase = getServiceBase();
-	document.getElementById('service_base').innerHTML = serviceBase + '?';
+	document.getElementById('service_base').innerHTML = serviceBase + '?url=';
 
 	const previewForm = document.getElementById('previewform');
 
