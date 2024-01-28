@@ -143,7 +143,7 @@
 			return loc.origin + loc.pathname;
 		}
 		// Fallback value
-		return 'https://html-preview.github.io/?';
+		return 'https://html-preview.github.io/';
 	};
 
 	/**
