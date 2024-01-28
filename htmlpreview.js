@@ -59,6 +59,18 @@
 	};
 
 	/**
+	 * Reports an error directly in HTML.
+	 * @param {string} msg - The error message to be reported to the user.
+	 * @returns {void}
+	 */
+	const reportError = function (msg) {
+		const errP = document.createElement('p');
+		errP.innerHTML = msg;
+		document.body.appendChild(errP);
+		throw new SyntaxError(msg);
+	};
+
+	/**
 	 * If the first parameter is a URL to a file on a known git forge,
 	 * returns the URL to the raw version of this file
 	 * (vs the HTML/Web view of it).
@@ -73,10 +85,7 @@
 		const params = new URLSearchParams(location.search);
 		const previewFileUrl = params.get('url');
 		if (previewFileUrl === null) {
-			const errP = document.createElement('p');
-			errP.innerHTML = 'Please use "...?url=..." vs the old "...?..."!';
-			document.body.appendChild(errP);
-			throw new SyntaxError('Missing required parameter "url"!');
+			reportError('Missing required parameter "url"');
 		}
 
 		return rawifyForgeUrl(previewFileUrl);
