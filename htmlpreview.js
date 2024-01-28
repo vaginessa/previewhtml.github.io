@@ -81,6 +81,8 @@
 		return rawifyForgeUrl(previewFileUrl);
 	};
 
+	const RE_GITLAB_PATH = /\/[^/]+\/.+\/(-\/)?|raw\/[^/]+/;
+
 	/**
 	 * Extracts the forge software and host,
 	 * the given a URL that points to a file on a known git forge.
@@ -105,11 +107,11 @@
 			software = FORGE_SOFTWARES.BitBucket;
 			host = FORGE_HOSTS.BitBucket_org;
 		} else if (url.host == 'gitlab.com'
-				&& (/\/[^/]+\/.+\/(-\/)?raw\/[^/]+/).test(url.pathname)) {
+				&& RE_GITLAB_PATH.test(url.pathname)) {
 			software = FORGE_SOFTWARES.GitLab;
 			host = FORGE_HOSTS.GitLab_com;
 		} else if (url.host == 'lab.allmende.io'
-				&& (/\/[^/]+\/.+\/(-\/)?raw\/[^/]+/).test(url.pathname)) {
+				&& RE_GITLAB_PATH.test(url.pathname)) {
 			software = FORGE_SOFTWARES.GitLab;
 			host = FORGE_HOSTS.Lab_Allmende_io;
 		} else if (url.host == 'codeberg.org'
