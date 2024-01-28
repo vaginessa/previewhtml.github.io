@@ -83,6 +83,7 @@
 	};
 
 	const RE_GITLAB_PATH = /^\/[^/]+\/.+\/(-\/)?(blob|raw)\/[^/]+/;
+	const RE_SOURCEHUT_PATH = /^\/~[^/]+\/[^/]+\/(tree|blob)\/[^/]+/;
 
 	/**
 	 * Extracts the forge software and host,
@@ -124,7 +125,7 @@
 			software = FORGE_SOFTWARES.ForgeJo;
 			host = FORGE_HOSTS.CodeBerg_org;
 		} else if (url.host == 'git.sr.ht'
-				&& (/^\/~[^/]+\/[^/]+\/(tree|blob)\/[^/]+/).test(url.pathname)) {
+				&& RE_SOURCEHUT_PATH.test(url.pathname)) {
 			software = FORGE_SOFTWARES.SourceHut;
 			host = FORGE_HOSTS.Git_Sr_Ht;
 		}
