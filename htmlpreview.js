@@ -323,7 +323,7 @@
 		for (let i = 0; i < link.length; ++i) {
 			// Get absolute URL
 			href = link[i].href;
-			if (isGitForgeFileUrl(href)) {
+			if (href != "" && isGitForgeFileUrl(href)) {
 				// Then add it to links queue and fetch using CORS proxy
 				links.push(fetchProxy(href, null, 0));
 			}
@@ -343,7 +343,7 @@
 		for (let i = 0; i < script.length; ++i) {
 			// Get absolute URL
 			src = script[i].src;
-			if (isGitForgeFileUrl(src)) {
+			if (src != "" && isGitForgeFileUrl(src)) {
 				// Then add it to scripts queue and fetch using CORS proxy
 				scripts.push(fetchProxy(src, null, 0));
 			} else {
