@@ -1,58 +1,188 @@
-<!DOCTYPE html>
-<!--
-SPDX-FileCopyrightText: 2012 - 2021 Jerzy Głowacki <jerzyglowacki@gmail.com>
-SPDX-FileCopyrightText: 2024 Robin Vobruba <hoijui.quaero@gmail.com>
 
-SPDX-License-Identifier: Apache-2.0
--->
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+	<title>GitHub HTML Preview</title>
+
+	<!-- Meta Tags -->
 	<meta charset="utf-8">
-	<title>Git-Forge HTML Preview</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="author" content="Kang-Ismet.com">
+	<meta name="description" content="Tutorial Blog Kang Ismet">
+	
+	<!-- Open graph -->
+	<meta property="og:url" content="https://previewhtml.github.io" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="GitHub HTML Preview" />
+	<meta property="og:description" content="CDN GitHub to preview HTML" />
+	<meta property="og:image" content="https://previewhtml.github.io/githtml.jpg" />
+
+	
+	<!-- Favicon -->
+	<link rel="shortcut icon" href="../img/favicon.ico">
+
+	<!-- Google Font -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+
+
+ 
+  <!-- Theme CSS -->
+	<link rel="stylesheet" type="text/css" href="tutorial.css">
 	<style>
-	body {
-		font: 12px 'Helvetica Neue', Helvetica, Arial, freesans, clean, sans-serif;
-		color: #333;
-	}
-	h1 {
-		font-size: 20px;
-	}
-	a {
-		color: #666;
-	}
-	#previewform {
-		display: none;
-		padding: 20px;
-		text-align: center;
-	}
-	strong {
-		color: #333;
-		background-color: #FAFFA6;
-		padding: 0.1em;
-	}
-	#footer {
-		margin: 20px 0;
-		font-size: 10px;
-		color: #666;
-	}
+	@media screen and (min-width:768px){
+::-webkit-scrollbar{-webkit-appearance:none;width:8px;height:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:10px}::-webkit-scrollbar-thumb:hover{background:rgba(0,0,0,.35)}::-webkit-scrollbar-thumb:active{background:rgba(0,0,0,.35)}
+}
+footer{background:#1b1b27;color:#72727f}
+footer a{color:#afafbf;text-decoration:none}
+
+.loading{left:40px;top:20px;position:absolute;}
+.container {position:relative;}
+#feed-list-container{position:relative;min-height:250px}
+
+.toTopB.vsbl {
+    visibility: visible;
+    opacity: 1;
+    transform: scale(1);
+}
+.toTopB {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    right: 20px;
+    bottom: 15px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 5;
+    transform: scale(0);
+    transition: transform .3s ease, opacity .3s ease,visibility .3s ease,margin-bottom 1s ease;
+}
+.toTopB svg .b {
+    fill: #fff;
+    stroke: #e6e6e6;
+    opacity: .9;
+}
+.toTopB svg .c {
+    fill: none;
+    stroke: #482dff;
+    stroke-dasharray: 100 100;
+    stroke-dashoffset: 100;
+    stroke-linecap: round;
+	display:none
+}
+.toTopB svg .d {
+    fill: none;
+    stroke: #08102b;
+}
+svg.line, svg .line {
+    fill: none!important;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1;
+}
+
+element.style {
+}
+.toTopB svg {
+    height: 100%;
+    width: 100%;
+    -webkit-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+    stroke-width: 1.5;
+    cursor: pointer;
+}
+#ScrollToTop{display:none}
+code{font-size:.9em !important;color:#222 !important}
+input {font-size:.87em; color:#888;padding:5px}
+input[type=text]:hover {border-color:#1c3659}
+input[type=text]{background:#fff;width:auto;display:inline-block;padding:8px 16px;border-radius:7px;border:1px solid #91969d;font-family:SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+    @media screen and (max-width:640px){.widget input[type=text]{display:block;width:100%}}
+
 	</style>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 </head>
 <body>
-	<form id="previewform" onsubmit="location.href='/?'+this.file.value;return false">
-		<h1>Git-Forge HTML Preview</h1>
-		<p>
-			Enter URL of the HTML file to preview:
-			<input type="url" name="url" class="textinput" value="" placeholder="e.g. https://github.com/user/repo/blob/master/index.html" size="60" autofocus>
-			<input type="submit" value="Preview">
-		</p>
-		<p>
-			or prepend to the URL:
-			<code><strong id="service_base">https://html-preview.github.io/?url=</strong>https://github.com/twbs/bootstrap/blob/gh-pages/2.3.2/index.html</code>
-		</p>
-		<p>
-			Contribute on <a href="https://github.com/html-preview/html-preview.github.io">GitHub</a>
-		</p>
-	</form>
-	<script src="htmlpreview.js"></script>
+
+
+<header class="navbar-light fixed-top header-static bg-mode">
+<nav class="navbar navbar-expand-lg">
+		<div class="container-fluid px-lg-5">
+		<!-- Logo START --> 
+			<a class="navbar-brand d-flex" href="https://tutorial.kang-ismet.com/tool/">
+				<img class="light-mode-item navbar-brand-item" src="kismt.svg" alt="logo">
+				<img class="dark-mode-item navbar-brand-item" src="kismt.svg" alt="logo">	
+				<span class="nav-item ms-2 fw-bold">kismt.</span></a>
+			</a>
+		<!-- Logo END -->
+		<ul class="navbar-nav navbar-nav-scroll">
+					<li class="nav-item">
+						<a class="nav-link" href="https://kang-ismet.com">Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="https://tutorial.kang-ismet.com">Tutorial</a>
+					</li>
+		</ul>
+		</div>
+</nav>
+</header>
+
+<main class="pt-5">
+
+<!-- Page header START -->
+  <div class="py-4" style="background-image:url(bggit.jpg); background-position: center center; background-size: cover; background-repeat: no-repeat;">
+	<div class="container">
+      <div class="row justify-content-center py-4">
+        <div class="col-md-6 text-center">
+        <!-- Title -->
+        <h1 class="text-white">	GitHub HTML Preview</h1>
+        <p class="mb-4 text-white">how to preview github html file</p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Page header END -->
+
+<div class="py-5">
+	<div class="container">
+		<div class="my-3 text-center">
+  <div class="text-center">
+<p class="mb-3">To get the preview of any GitHub HTML file<br />
+    enter the regular URL of GitHub HTML file into the textbox below.</p>
+<p>
+    <input type="url" name="url" class="textinput" value="" placeholder="e.g. https://github.com/user/repo/blob/master/index.html" size="55" autofocus>
+</p>
+<p>
+    <input type="submit" value="Preview" class="btn btn-danger">
+</p>
+<p>
+or prepend to the URL:<br/>
+			<code><strong id="service_base">https://previewhtml.github.io/?url=</strong>https://github.com/twbs/bootstrap/blob/gh-pages/2.3.2/index.html</code>
+</p>
+<p></p>
+<p></p>
+</div>
+
+  </div>
+	</div>
+</div>
+</main>
+
+
+  <footer class="pt-3 pb-1 mt-4">
+    <p class="text-center">© 2024 <a href="https://kang-ismet.com">Kang Ismet</a></p>
+	<div id="ScrollToTop" class="toTopB vsbl">
+<svg viewBox="0 0 38 38"><circle class="b" cx="17" cy="17" r="15.92"></circle><circle class="c scrollProgress" cx="17" cy="17" r="15.92" style="stroke-dashoffset: 79.6851;"></circle><path class="line d" d="M15.07,21.06,19.16,17l-4.09-4.06"></path></svg>
+</div>
+  </footer>
+<script src="htmlpreview.js"></script>
 </body>
 </html>
+
