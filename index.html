@@ -100,7 +100,8 @@ element.style {
 }
 #ScrollToTop{display:none}
 code{font-size:.9em !important;color:#222 !important}
-input {font-size:.87em; color:#888;padding:5px}
+input {font-size:.87em; color:#222;padding:5px}
+input placeholder {color:#888;}
 input[type=text]:hover {border-color:#1c3659}
 input[type=text]{background:#fff;width:auto;display:inline-block;padding:8px 16px;border-radius:7px;border:1px solid #91969d;font-family:SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
     @media screen and (max-width:640px){.widget input[type=text]{display:block;width:100%}}
@@ -160,12 +161,14 @@ input[type=text]{background:#fff;width:auto;display:inline-block;padding:8px 16p
   <div class="text-center">
 <p class="mb-3">To get the preview of any GitHub HTML file<br />
     enter the regular URL of GitHub HTML file into the textbox below.</p>
+	  <form id="previewform" onsubmit="location.href='/?'+this.file.value;return false">
 <p>
     <input type="url" name="url" class="textinput" value="" placeholder="e.g. https://github.com/user/repo/blob/master/index.html" size="55" autofocus>
 </p>
 <p>
     <input type="submit" value="Preview" class="btn btn-danger">
 </p>
+</form>
 <p>
 or prepend to the URL:<br/>
 			<code><strong id="service_base">https://previewhtml.github.io/?url=</strong>https://github.com/twbs/bootstrap/blob/gh-pages/2.3.2/index.html</code>
